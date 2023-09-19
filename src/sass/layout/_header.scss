@@ -1,0 +1,44 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  font-family: "Averia Serif Libre", sans-serif;
+
+  &__title {
+    font-size: 4rem;
+    font-weight: 300;
+    color: #fff;
+  }
+
+  &__logout-btn button {
+    font-family: "Averia Serif Libre", sans-serif;
+  }
+}
+
+.view-toggle {
+  background-color: $color-light-grey-1;
+  padding: 12px 10px;
+  border-radius: 5px;
+  display: inline-block;
+  font-size: 1.8rem;
+  transition: all 0.3s;
+
+  & [name="view"] {
+    display: none;
+  }
+
+  & input[type="radio"] + label {
+    background-color: $color-light-grey-1;
+    color: #444;
+    padding: 6px 40px;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.3s;
+  }
+
+  & input[type="radio"]:checked + label {
+    background-color: $color-secondary;
+    color: #444;
+  }
+}

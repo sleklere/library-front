@@ -1,0 +1,48 @@
+.welcome {
+  width: 100vw;
+  height: 100vh;
+  // background-image: url("./Biblioteca.jpg");
+  background-image: url("../../assets/library.webp");
+  background-size: cover;
+
+  &__title {
+    font-family: "Libre Baskerville";
+    font-size: 12.8rem;
+    font-weight: 400;
+    // font-style: italic;
+    color: white;
+    padding-top: 5rem;
+    padding-left: 5rem;
+
+    &__background {
+      height: 20rem;
+      width: 80rem;
+      margin-top: -18rem;
+
+      background-color: rgba($color-secondary, 0.8);
+    }
+  }
+
+  &__btn {
+    button {
+      border: none;
+      display: block;
+      width: 25rem;
+      padding: 1.5rem 4rem;
+      margin: 20% auto;
+
+      font-family: "Libre Baskerville", sans-serif;
+      text-align: center;
+      font-size: 2.8rem;
+      text-decoration: none;
+
+      background: linear-gradient(
+        to right bottom,
+        $color-primary,
+        saturate($color-primary, 30)
+      );
+      color: white;
+      border-radius: 8px;
+    }
+  }
+}
