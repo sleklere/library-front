@@ -1,0 +1,32 @@
+table {
+  // font-family: "Poppins", sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: $fs-1;
+}
+
+th {
+  color: $color-font-1;
+  font-weight: 600;
+  user-select: none;
+}
+
+td {
+  color: #444;
+  font-weight: 400;
+}
+
+td,
+th {
+  // border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+thead tr {
+  background-color: rgba(221, 221, 221, 0.8);
+}
+
+tr:nth-child(even) {
+  background-color: rgba(221, 221, 221, 0.8);
+}

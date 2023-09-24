@@ -1,28 +1,60 @@
-import { useMemo } from "react";
-import { useTable } from "react-table";
+import { useEffect, useMemo, useState } from "react";
+import { useTable, useSortBy } from "react-table";
+import fetchBooks from "./utils/fetchBooks";
 
 const COLUMNS = [
-  { accessor: "_id", Header: "Id" },
+  { accessor: "id", Header: "Nº" },
   { accessor: "title", Header: "Título" },
-  { accessor: "authorName", Header: "Autor" },
+  { accessor: "author", Header: "Autor" },
   { accessor: "isAvailable", Header: "Prestado" },
 ];
 
-function BooksTable(props) {
-  const books = props.books.map((book) => {
-    book.authorName = book.author?.name;
-    book.isAvailable = book.isAvailable ? "No" : "Sí";
-    return book;
-  });
-
+function BooksTable({ books, setBooks }) {
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => books, [books]);
+  const [firstRender, setFirstRender] = useState(true);
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    state: { pageIndex, pageSize, sortBy },
+  } = useTable(
+    {
       columns,
       data,
-    });
+      manualSortBy: true,
+      // manualPagination: true,
+      initialState: { pageIndex: 0, pageSize: 20, sortBy: [""] },
+    },
+    useSortBy
+    // usePagination
+  );
+
+  useEffect(() => {
+    // prevent unnecessary calls to the hook
+    if (firstRender) return;
+
+    // console.log(
+    //   `fetching books in BooksTable.jsx\nSORT BY ---------- ${sortBy[0]?.id} - desc(${sortBy[0]?.desc})`
+    // );
+
+    if (sortBy[0]?.id === "author") {
+      fetchBooks({ pageIndex, pageSize, sortBy, sortAuthor: true }).then(
+        (books) => {
+          setBooks(books);
+        }
+      );
+    } else {
+      fetchBooks({ pageIndex, pageSize, sortBy }).then((books) => {
+        setBooks(books);
+      });
+    }
+  }, [pageIndex, pageSize, sortBy, setBooks, firstRender]);
+
+  useEffect(() => setFirstRender(false), []);
 
   return (
     <table {...getTableProps()}>
@@ -30,7 +62,12 @@ function BooksTable(props) {
         {headerGroups.map((hg) => (
           <tr {...hg.getFooterGroupProps()}>
             {hg.headers.map((column) => (
-              <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+              <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                {column.render("Header")}
+                <span>
+                  {column.isSorted ? (column.isSortedDesc ? "🔽" : "🔼") : ""}
+                </span>
+              </th>
             ))}
           </tr>
         ))}

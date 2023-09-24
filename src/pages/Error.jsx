@@ -1,6 +1,9 @@
 import { useRouteError } from "react-router-dom";
+import useSetPageTitle from "../hooks/useSetPageTitle";
 
-function Error() {
+function Error(props) {
+  useSetPageTitle(props.pageTitle);
+
   const error = useRouteError();
   console.log(error);
 
