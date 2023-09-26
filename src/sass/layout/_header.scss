@@ -1,44 +1,45 @@
 .header {
   display: flex;
   justify-content: space-between;
-  padding: 1rem 2rem;
+  padding: $p2 $p4;
   font-family: "Averia Serif Libre", sans-serif;
 
   &__title {
-    font-size: 4rem;
+    font-size: $fs-7;
     font-weight: 300;
     color: #fff;
   }
 
   &__logout-btn button {
     font-family: "Averia Serif Libre", sans-serif;
+    background-color: $color-secondary;
   }
 }
 
 .view-toggle {
-  background-color: $color-light-grey-1;
-  padding: 12px 10px;
-  border-radius: 5px;
+  background-color: $color-grey-light-3;
+  padding: 1.2rem 1rem;
+  border-radius: $br-round;
   display: inline-block;
-  font-size: 1.8rem;
-  transition: all 0.3s;
+  font-size: $fs-3;
+  transition: $transition-short;
 
   & [name="view"] {
     display: none;
   }
 
   & input[type="radio"] + label {
-    background-color: $color-light-grey-1;
-    color: #444;
-    padding: 6px 40px;
-    border-radius: 5px;
+    background-color: $color-grey-light-3;
+    color: $color-grey-dark-3;
+    padding: 0.6rem 4rem;
+    border-radius: $br-round;
     cursor: pointer;
     user-select: none;
-    transition: all 0.3s;
+    transition: $transition-short;
   }
 
   & input[type="radio"]:checked + label {
     background-color: $color-secondary;
-    color: #444;
+    color: $color-grey-dark-1;
   }
 }

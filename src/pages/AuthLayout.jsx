@@ -10,20 +10,28 @@ function AuthLayout(props) {
 
   return (
     <Fragment>
-      <main className="auth-container">
-        <div
-          className="image-side"
-          style={{
-            backgroundImage: `${
-              props.register
-                ? "url('register-background.jpg')"
-                : "url('login-background.jpg')"
-            }`,
-          }}
-        ></div>
-        <div className="form-side">
-          {props.register && <RegisterForm title={"Register"} />}
-          {props.login && <LoginForm title={"Login"} />}
+      <main
+        // style={{
+        //   backgroundImage: "url('stacked-waves-haikei.svg')",
+        //   backgroundSize: "cover",
+        // }}
+        className="auth-main"
+      >
+        <div className="auth-container">
+          <div
+            className="image-side"
+            style={{
+              backgroundImage: `${
+                props.register
+                  ? "url('register-background.jpg')"
+                  : "url('login-background.jpg')"
+              }`,
+            }}
+          ></div>
+          <div className="form-side">
+            {props.register && <RegisterForm title={"Register"} />}
+            {props.login && <LoginForm title={"Login"} />}
+          </div>
         </div>
       </main>
     </Fragment>

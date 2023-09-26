@@ -1,7 +1,7 @@
 .bookMosaic {
   width: fit-content;
   font-weight: 500;
-  color: $color-font-1;
+  color: $color-dark-primary;
   text-align: center;
 
   &__img {
@@ -21,8 +21,4 @@
     color: inherit;
     font-weight: 400;
   }
-
-  // &__categories {
-  //   font-weight: 400;
-  // }
 }
