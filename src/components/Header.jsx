@@ -1,13 +1,32 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { viewActions } from "../store/view-slice";
 import { useDispatch, useSelector } from "react-redux";
+import { userActions } from "../store/user-slice";
+import axios from "axios";
 
 function Header() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const viewState = useSelector((state) => state.view.view);
+
   const handleToggle = function (e) {
     dispatch(viewActions.toggleView(e.target.value));
   };
+
+  async function logoutHandler() {
+    // only necessary if using cookies in response
+    // try {
+    //   await axios({
+    //     method: "GET",
+    //     url: `${process.env.REACT_APP_API_URL}/users/logout`,
+    //   });
+
+    dispatch(userActions.logout());
+    navigate("/login");
+    // } catch (err) {
+    // console.log(err);
+    // }
+  }
 
   return (
     <header className="header">
@@ -41,9 +60,9 @@ function Header() {
           </label>
         </div>
       </div>
-      <Link to={"/"} className="header__logout-btn">
-        <button className="btn">Logout</button>
-      </Link>
+      <button className="btn header__logout-btn" onClick={logoutHandler}>
+        Logout
+      </button>
     </header>
   );
 }

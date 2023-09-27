@@ -1,9 +1,12 @@
 import { Outlet } from "react-router-dom";
+import AuthVerify from "./components/auth/AuthVerify";
 
 function MainLayout() {
   return (
     <>
-      <Outlet />
+      <AuthVerify>
+        <Outlet />
+      </AuthVerify>
     </>
   );
 }

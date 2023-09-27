@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Error from "./pages/Error";
 import Welcome from "./pages/Welcome";
 import AuthLayout from "./pages/AuthLayout";
+import ProtectRoute from "./components/auth/ProtectRoute";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/home",
-        element: <Home pageTitle={"Home"} />,
+        element: (
+          <ProtectRoute>
+            <Home pageTitle={"Home"} />
+          </ProtectRoute>
+        ),
       },
       {
         path: "/login",

@@ -1,10 +1,10 @@
 import { useDispatch } from "react-redux";
-import useInput from "../hooks/useInput";
-import { useNavigate } from "react-router-dom";
+import useInput from "../../hooks/useInput";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import authUserAPI from "./utils/authUserAPI";
-import { userActions } from "../store/user-slice";
-import LoaderSpinner from "./LoaderSpinner";
+import authUserAPI from "../utils/authUserAPI";
+import { userActions } from "../../store/user-slice";
+import LoaderSpinner from "../LoaderSpinner";
 
 function LoginForm() {
   const dispatch = useDispatch();
@@ -48,15 +48,19 @@ function LoginForm() {
     }
 
     try {
-      // const { user, token } = await authUserAPI("login", {
-      //   username: enteredUsername,
-      //   password: enteredPassword,
-      // });
-      // dispatch(userActions.login({ user, token }));
-      // setIsFormSubmitting(false);
-      // resetUsernameInput();
-      // resetPasswordInput();
-      // navigate("/home");
+      const { user, token } = await authUserAPI("login", {
+        username: enteredUsername,
+        password: enteredPassword,
+      });
+
+      resetUsernameInput();
+      resetPasswordInput();
+
+      dispatch(userActions.login({ user, token }));
+
+      setIsFormSubmitting(false);
+
+      navigate("/home");
     } catch (err) {
       console.log(err.response);
       setIsFormSubmitting(false);
@@ -99,11 +103,7 @@ function LoginForm() {
             <p className="error-text">Please enter a password</p>
           )}
         </label>
-        <button
-          className={`btn auth-submit`}
-          type="submit"
-          disabled={!validForm}
-        >
+        <button className="auth-submit" type="submit" disabled={!validForm}>
           {isFormSubmitting ? (
             // <FontAwesomeIcon icon={faSpinner} className="btn-spinner" />
             <LoaderSpinner />
@@ -111,6 +111,9 @@ function LoginForm() {
             "Login"
           )}
         </button>
+        <Link to={"/register"}>
+          <button className="auth-change">Register</button>
+        </Link>
       </form>
     </div>
   );

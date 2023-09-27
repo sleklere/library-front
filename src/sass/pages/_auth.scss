@@ -32,7 +32,7 @@
 
     h1 {
       font-family: "Libre Baskerville", sans-serif;
-      color: $color-grey-dark-1;
+      color: $color-grey-dark-2;
       font-size: $fs-4;
       margin-bottom: $m4;
       font-weight: 600;
@@ -59,7 +59,7 @@
     label {
       display: flex;
       flex-direction: column;
-      color: $color-grey-dark-1;
+      color: $color-grey-dark-2;
       font-size: $fs-2;
       gap: 3px;
       margin-bottom: 1.6rem;
@@ -80,6 +80,7 @@
 
     input {
       font-family: "Poppins", sans-serif;
+      color: $color-grey-dark-2;
       height: 3.2rem;
       border-radius: $br-small;
       border: 1px solid rgba($color-grey-dark-1, 0.1);
@@ -93,11 +94,11 @@
         font-weight: 300;
         color: $color-grey-dark-3;
       }
-    }
 
-    input:focus {
-      border: 1px solid $color-grey-dark-2;
-      outline: 0;
+      &:focus {
+        border: 1px solid $color-grey-dark-3;
+        outline: 0;
+      }
     }
 
     // .form__errors {
@@ -116,6 +117,14 @@
       font-family: "Libre Baskerville", sans-serif;
       margin-top: $m3;
       width: 100%;
+    }
+
+    .auth-change {
+      width: 100%;
+      margin-top: $m2;
+      background-color: $color-grey-light-2;
+      border: 2px solid $color-grey-light-4;
+      color: $color-grey-dark-3;
     }
   }
   .error-text {

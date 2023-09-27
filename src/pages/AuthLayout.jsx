@@ -1,22 +1,14 @@
 import { Fragment } from "react";
-import { redirect } from "react-router-dom";
-// import { getAuthToken } from "../../Components/Utils/AuthVerify";
-import RegisterForm from "../components/RegisterForm";
-import LoginForm from "../components/LoginForm";
 import useSetPageTitle from "../hooks/useSetPageTitle";
+import RegisterForm from "../components/auth/RegisterForm";
+import LoginForm from "../components/auth/LoginForm";
 
 function AuthLayout(props) {
   useSetPageTitle(props.pageTitle);
 
   return (
     <Fragment>
-      <main
-        // style={{
-        //   backgroundImage: "url('stacked-waves-haikei.svg')",
-        //   backgroundSize: "cover",
-        // }}
-        className="auth-main"
-      >
+      <main className="auth-main">
         <div className="auth-container">
           <div
             className="image-side"
