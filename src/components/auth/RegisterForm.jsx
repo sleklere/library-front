@@ -104,8 +104,9 @@ function RegisterForm() {
         passwordConfirm,
       });
 
-      resetUsername();
+      resetFirstName();
       resetLastName();
+      resetUsername();
       resetEmail();
       resetPsswd();
       resetPsswdConfirm();
@@ -210,12 +211,7 @@ function RegisterForm() {
           )}
         </label>
         <button className={`btn auth-submit`} type="submit">
-          {isFormSubmitting ? (
-            <LoaderSpinner />
-          ) : (
-            // <FontAwesomeIcon icon={faSpinner} className="btn-spinner" />
-            "Register"
-          )}
+          {isFormSubmitting ? <LoaderSpinner /> : "Register"}
         </button>
         <Link to={"/login"}>
           <button className="auth-change">Login</button>

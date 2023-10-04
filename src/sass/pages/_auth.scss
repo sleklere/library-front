@@ -11,6 +11,7 @@
   max-width: 100rem;
   height: 80vh;
   overflow: hidden;
+  // overflow-y: scroll;
   border-radius: $br-small;
   background-color: #ebebeb;
   background: linear-gradient(to right bottom, #ebebeb, #f7f7f7);
@@ -50,6 +51,8 @@
   padding: $p4;
   border-radius: $br-medium;
   animation: slide-down 300ms ease-out forwards;
+  max-height: 80vh;
+  overflow-y: scroll;
 
   form {
     width: 100%;
@@ -130,7 +133,7 @@
   .error-text {
     color: $color-error;
     font-size: $fs-2;
-    margin-bottom: $m2;
+    // margin-bottom: $m2;
   }
 }
 
