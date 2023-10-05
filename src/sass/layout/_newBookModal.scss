@@ -45,4 +45,47 @@
       // margin-bottom: $m2;
     }
   }
+
+  .borrowed-input-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2rem;
+    font-size: $fs-2;
+    color: $color-grey-dark-2;
+  }
+
+  .borrowed-toggle {
+    background-color: $color-grey-light-3;
+    padding: 1.2rem 1rem;
+    border-radius: $br-round;
+    display: inline-block;
+    // display: flex;
+    max-width: fit-content;
+    font-size: $fs-2;
+    transition: $transition-short;
+
+    & [name="borrowed"] {
+      display: none;
+    }
+
+    // label {
+    //   width: 50%;
+    // }
+
+    & input[type="radio"] + label {
+      background-color: $color-grey-light-3;
+      color: $color-grey-dark-3;
+      padding: 0.6rem 2rem;
+      border-radius: $br-round;
+      cursor: pointer;
+      user-select: none;
+      transition: $transition-short;
+    }
+
+    & input[type="radio"]:checked + label {
+      background-color: $color-secondary;
+      color: $color-grey-dark-1;
+    }
+  }
 }

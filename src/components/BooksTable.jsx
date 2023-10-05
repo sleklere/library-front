@@ -7,6 +7,7 @@ const COLUMNS = [
   { accessor: "title", Header: "Título" },
   { accessor: "author", Header: "Autor" },
   { accessor: "isAvailable", Header: "Prestado" },
+  { accessor: "borrower", Header: "Prestador" },
 ];
 
 function BooksTable({ books, setBooks }) {
@@ -47,12 +48,12 @@ function BooksTable({ books, setBooks }) {
 
     if (sortBy[0]?.id === "author") {
       fetchBooks({ pageIndex, pageSize, sortBy, sortAuthor: true }).then(
-        (books) => {
+        books => {
           setBooks(books);
         }
       );
     } else {
-      fetchBooks({ pageIndex, pageSize, sortBy }).then((books) => {
+      fetchBooks({ pageIndex, pageSize, sortBy }).then(books => {
         setBooks(books);
       });
     }
@@ -63,9 +64,9 @@ function BooksTable({ books, setBooks }) {
   return (
     <table {...getTableProps()}>
       <thead>
-        {headerGroups.map((hg) => (
+        {headerGroups.map(hg => (
           <tr {...hg.getFooterGroupProps()}>
-            {hg.headers.map((column) => (
+            {hg.headers.map(column => (
               <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                 {column.render("Header")}
                 <span>
@@ -77,11 +78,11 @@ function BooksTable({ books, setBooks }) {
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
+        {rows.map(row => {
           prepareRow(row);
           return (
             <tr {...row.getRowProps()}>
-              {row.cells.map((cell) => {
+              {row.cells.map(cell => {
                 return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
               })}
             </tr>

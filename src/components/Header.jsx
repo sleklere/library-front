@@ -6,7 +6,7 @@ import { userActions } from "../store/user-slice";
 function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const viewState = useSelector((state) => state.view.view);
+  const viewState = useSelector(state => state.view.view);
 
   const handleToggle = function (e) {
     dispatch(viewActions.toggleView(e.target.value));
@@ -30,10 +30,7 @@ function Header() {
             onChange={handleToggle}
             checked={viewState === "Table"}
           />
-          <label className="radio-button" htmlFor="view-toggle-table">
-            {" "}
-            Table
-          </label>
+          <label htmlFor="view-toggle-table"> Table</label>
 
           <input
             type="radio"
@@ -43,10 +40,7 @@ function Header() {
             onChange={handleToggle}
             checked={viewState === "Mosaic"}
           />
-          <label className="radio-button" htmlFor="view-toggle-mosaic">
-            {" "}
-            Mosaic
-          </label>
+          <label htmlFor="view-toggle-mosaic"> Mosaic</label>
         </div>
       </div>
       <button className="btn header__logout-btn" onClick={logoutHandler}>

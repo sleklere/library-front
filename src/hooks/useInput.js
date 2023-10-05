@@ -35,7 +35,7 @@ const useInput = (validationScheme) => {
   const [value, setValue] = useState("");
   const [touched, setTouched] = useState(false);
 
-  const isValid = validationScheme(value) && touched;
+  const isValid = validationScheme(value);
   const isInvalid = !validationScheme(value) && touched;
 
   const onChange = (e) => {

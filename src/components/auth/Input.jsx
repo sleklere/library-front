@@ -7,9 +7,9 @@ const Input = ({
   classes,
   ...props
 }) => (
-  <label className={classes}>
+  <label className={`label ${classes}`}>
     {labelText}
-    <input type={type} placeholder={placeholder} {...props} />
+    <input className="input" type={type} placeholder={placeholder} {...props} />
     {isInvalid && <p className="error-text">{errMsg}</p>}
   </label>
 );
