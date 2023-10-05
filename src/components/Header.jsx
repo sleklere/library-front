@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { viewActions } from "../store/view-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../store/user-slice";
-import axios from "axios";
 
 function Header() {
   const dispatch = useDispatch();
@@ -14,18 +13,8 @@ function Header() {
   };
 
   async function logoutHandler() {
-    // only necessary if using cookies in response
-    // try {
-    //   await axios({
-    //     method: "GET",
-    //     url: `${process.env.REACT_APP_API_URL}/users/logout`,
-    //   });
-
     dispatch(userActions.logout());
     navigate("/login");
-    // } catch (err) {
-    // console.log(err);
-    // }
   }
 
   return (

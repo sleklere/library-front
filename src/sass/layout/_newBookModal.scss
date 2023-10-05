@@ -1,0 +1,48 @@
+.new-book-modal {
+  position: fixed;
+  top: calc(50% - 35vh);
+  left: calc(50% - 35vw);
+  width: 70vw;
+  height: 70vh;
+  backdrop-filter: blur(3px);
+  background-color: rgba($color-grey-light-1, 0.75);
+  z-index: 100;
+  border-radius: $br-small;
+
+  display: flex;
+
+  &_background-side {
+    order: 2;
+    width: 50%;
+    background-image: url("../../../public/new-book-background.jpg");
+    background-position: center;
+    background-size: cover;
+  }
+
+  &_form-side {
+    order: 1;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: $p4;
+    animation: slide-down 300ms ease-out forwards;
+
+    h1 {
+      font-family: "Averia Serif Libre", sans-serif;
+      color: $color-grey-dark-1;
+      margin-bottom: $m4;
+    }
+
+    form {
+      width: 80%;
+    }
+
+    .error-text {
+      color: $color-error;
+      font-size: $fs-2;
+      // margin-bottom: $m2;
+    }
+  }
+}

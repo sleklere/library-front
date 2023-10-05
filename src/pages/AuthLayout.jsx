@@ -30,14 +30,4 @@ function AuthLayout(props) {
   );
 }
 
-// protects the route so that a user can't try to login or register when he is logged in
-// export async function loader() {
-//   const token = getAuthToken();
-
-//   if (token) {
-//     return redirect("/");
-//   }
-//   return null;
-// }
-
 export default AuthLayout;

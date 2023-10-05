@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getAuthToken } from "../auth/AuthVerify";
 
 const fetchBooks = async function ({
   pageIndex,
@@ -7,6 +8,7 @@ const fetchBooks = async function ({
   sortAuthor = false,
 }) {
   console.log("---- FETCHING BOOKS ----");
+  const token = getAuthToken();
 
   let sort = "";
 
@@ -32,6 +34,7 @@ const fetchBooks = async function ({
       }` + queryString,
       {
         method: "get",
+        headers: { Authorization: `Bearer ${token}` },
       }
     );
 

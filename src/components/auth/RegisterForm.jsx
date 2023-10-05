@@ -5,6 +5,16 @@ import { useState } from "react";
 import useInput from "../../hooks/useInput";
 import authUserAPI from "../utils/authUserAPI";
 import { userActions } from "../../store/user-slice";
+import Input from "./Input";
+import { getForm } from "../utils/form";
+
+const notEmpty = (val) => {
+  return val.trim() !== "";
+};
+
+const emailValidation = (val) => {
+  return /.{3,}@.{3,}\.com/.test(val);
+};
 
 function RegisterForm() {
   const dispatch = useDispatch();
@@ -12,104 +22,45 @@ function RegisterForm() {
   const [formBackError, setFormBackError] = useState("");
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
 
-  const {
-    value: username,
-    blurHandler: usernameBlur,
-    changeHandler: usernameChange,
-    hasError: usernameErr,
-    isValid: usernameValid,
-    classes: usernameClasses,
-    reset: resetUsername,
-  } = useInput((value) => value.trim() !== "");
+  const [usernameInputStates, usernameProps] = useInput(notEmpty);
+  const [firstNameInputStates, firstNameProps] = useInput(notEmpty);
+  const [lastNameInputStates, lastNameProps] = useInput(notEmpty);
+  const [emailInputStates, emailProps] = useInput(emailValidation);
+  const [psswdInputStates, psswdProps] = useInput(notEmpty);
+  const [psswdConfInputStates, psswdConfProps] = useInput(
+    (val) => val.trim() === psswdProps.value
+  );
 
-  const {
-    value: firstName,
-    blurHandler: firstNameBlur,
-    changeHandler: firstNameChange,
-    hasError: firstNameErr,
-    isValid: firstNameValid,
-    classes: firstNameClasses,
-    reset: resetFirstName,
-  } = useInput((value) => value.trim() !== "");
-
-  const {
-    value: lastName,
-    blurHandler: lastNameBlur,
-    changeHandler: lastNameChange,
-    hasError: lastNameErr,
-    isValid: lastNameValid,
-    classes: lastNameClasses,
-    reset: resetLastName,
-  } = useInput((value) => value.trim() !== "");
-
-  const {
-    value: email,
-    blurHandler: emailBlur,
-    changeHandler: emailChange,
-    hasError: emailErr,
-    isValid: emailValid,
-    classes: emailClasses,
-    reset: resetEmail,
-  } = useInput((value) => value.includes("@"));
-
-  const {
-    value: password,
-    blurHandler: psswdBlur,
-    changeHandler: psswdChange,
-    hasError: psswdErr,
-    isValid: psswdValid,
-    classes: psswdClasses,
-    reset: resetPsswd,
-  } = useInput((value) => value.trim() !== "");
-
-  const {
-    value: passwordConfirm,
-    blurHandler: psswdConfirmBlur,
-    changeHandler: psswdConfirmChange,
-    hasError: psswdConfirmErr,
-    isValid: psswdConfirmValid,
-    classes: psswdConfirmClasses,
-    reset: resetPsswdConfirm,
-  } = useInput((value) => value.trim() === password);
-
-  let validForm;
-
-  if (
-    usernameValid &&
-    firstNameValid &&
-    lastNameValid &&
-    emailValid &&
-    psswdValid &&
-    psswdConfirmValid
-  )
-    validForm = true;
+  const { formIsValid, formReset } = getForm(
+    usernameInputStates,
+    firstNameInputStates,
+    lastNameInputStates,
+    emailInputStates,
+    psswdInputStates,
+    psswdConfInputStates
+  );
 
   async function registerHandler(event) {
     event.preventDefault();
 
     setIsFormSubmitting(true);
 
-    if (!validForm) {
+    if (!formIsValid) {
       setIsFormSubmitting(false);
       return;
     }
 
     try {
       const { user, token } = authUserAPI("signup", {
-        firstName,
-        lastName,
-        username,
-        email,
-        password,
-        passwordConfirm,
+        firstName: firstNameProps.value,
+        lastName: lastNameProps.value,
+        username: usernameProps.value,
+        email: emailProps.value,
+        password: psswdProps.value,
+        passwordConfirm: psswdConfProps.value,
       });
 
-      resetFirstName();
-      resetLastName();
-      resetUsername();
-      resetEmail();
-      resetPsswd();
-      resetPsswdConfirm();
+      formReset();
 
       dispatch(userActions.login({ user, token }));
 
@@ -127,89 +78,50 @@ function RegisterForm() {
     <div className="form-container">
       <h1>Creá tu Cuenta</h1>
       {formBackError.length > 0 && <p>{formBackError}</p>}
-      <form onSubmit={registerHandler}>
-        <div className="name-lastName">
-          <label className={firstNameClasses}>
-            Nombre
-            <input
-              type="text"
-              placeholder="Juan"
-              name="firstName"
-              value={firstName}
-              onBlur={firstNameBlur}
-              onChange={firstNameChange}
-            />
-            {firstNameErr && (
-              <p className="error-text">Please enter a valid first name</p>
-            )}
-          </label>
-          <label className={lastNameClasses}>
-            Apellido
-            <input
-              type="text"
-              placeholder="Rodriguez"
-              name="lastName"
-              value={lastName}
-              onBlur={lastNameBlur}
-              onChange={lastNameChange}
-            />
-            {lastNameErr && (
-              <p className="error-text">Please enter a valid last name</p>
-            )}
-          </label>
-        </div>
-        <label className={emailClasses}>
-          E-mail
-          <input
-            type="email"
-            placeholder="user@email.com"
-            name="email"
-            value={email}
-            onBlur={emailBlur}
-            onChange={emailChange}
-          />
-          {emailErr && <p className="error-text">Please enter a valid email</p>}
-        </label>
-        <label className={usernameClasses}>
-          Usuario
-          <input
-            type="text"
-            placeholder="username123"
-            name="user"
-            value={username}
-            onBlur={usernameBlur}
-            onChange={usernameChange}
-          />
-          {usernameErr && (
-            <p className="error-text">Please enter a valid username</p>
-          )}
-        </label>
-        <label className={psswdClasses}>
-          Contraseña
-          <input
-            type="password"
-            placeholder="************"
-            name="password"
-            value={password}
-            onBlur={psswdBlur}
-            onChange={psswdChange}
-          />
-          {psswdErr && <p className="error-text">Please enter a password</p>}
-        </label>
-        <label className={psswdConfirmClasses}>
-          Repetir Contraseña
-          <input
-            type="password"
-            placeholder="************"
-            name="passwordConfirm"
-            value={passwordConfirm}
-            onBlur={psswdConfirmBlur}
-            onChange={psswdConfirmChange}
-          />
-          {psswdConfirmErr && (
-            <p className="error-text">Passwords must match</p>
-          )}
-        </label>
+      <form className="form" onSubmit={registerHandler}>
+        <Input
+          type="text"
+          labelText="Nombre"
+          placeholder="Juan"
+          errMsg="Please enter a valid first name"
+          {...firstNameProps}
+        />
+        <Input
+          type="text"
+          labelText="Apellido"
+          placeholder="Gonzalez"
+          errMsg="Please enter a valid last name"
+          {...lastNameProps}
+        />
+
+        <Input
+          type="text"
+          labelText="Email"
+          placeholder="user@email.com"
+          errMsg="Please enter a valid email"
+          {...emailProps}
+        />
+        <Input
+          type="text"
+          labelText="Usuario"
+          placeholder="username123"
+          errMsg="Please enter a valid username"
+          {...usernameProps}
+        />
+        <Input
+          type="password"
+          labelText="Contraseña"
+          placeholder="************"
+          errMsg="Please enter a password"
+          {...psswdProps}
+        />
+        <Input
+          type="password"
+          labelText="Repetir Contraseña"
+          placeholder="************"
+          errMsg="Passwords must match"
+          {...psswdConfProps}
+        />
         <button className={`btn auth-submit`} type="submit">
           {isFormSubmitting ? <LoaderSpinner /> : "Register"}
         </button>

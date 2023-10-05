@@ -1,0 +1,68 @@
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    color: $color-grey-dark-2;
+    font-size: $fs-2;
+    gap: 3px;
+    margin-bottom: 1.6rem;
+
+    &.form-input--invalid {
+      input {
+        border: 1px solid $color-error;
+        background-color: lighten($color-error, 45%);
+      }
+
+      input:focus {
+        border: 1px solid $color-secondary;
+        background-color: lighten($color-secondary, 40%);
+        outline: none;
+      }
+    }
+  }
+
+  input {
+    font-family: "Poppins", sans-serif;
+    color: $color-grey-dark-2;
+    height: 3.2rem;
+    border-radius: $br-small;
+    border: 1px solid rgba($color-grey-dark-1, 0.1);
+    background-color: #fff;
+    text-indent: 1rem;
+    font-size: $fs-2;
+    transition: $transition-short;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px;
+
+    &::placeholder {
+      font-weight: 300;
+      color: $color-grey-dark-3;
+    }
+
+    &:focus {
+      border: 1px solid $color-grey-dark-3;
+      outline: 0;
+    }
+  }
+
+  // .form__errors {
+  //   margin-bottom: 2rem;
+
+  //   &-item {
+  //     list-style: none;
+  //     font-size: 1.6rem;
+  //     color: crimson;
+  //     margin-bottom: $m1;
+  //   }
+  // }
+
+  button {
+    position: relative;
+    font-family: "Libre Baskerville", sans-serif;
+    margin-top: $m3;
+    width: 100%;
+  }
+}

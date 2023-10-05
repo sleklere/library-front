@@ -5,6 +5,12 @@ import { useState } from "react";
 import authUserAPI from "../utils/authUserAPI";
 import { userActions } from "../../store/user-slice";
 import LoaderSpinner from "../LoaderSpinner";
+import Input from "./Input";
+import { getForm } from "../utils/form";
+
+const notEmpty = val => {
+  return val.trim() !== "";
+};
 
 function LoginForm() {
   const dispatch = useDispatch();
@@ -12,49 +18,30 @@ function LoginForm() {
   const [formBackError, setFormBackError] = useState("");
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
 
-  const {
-    value: enteredUsername,
-    isValid: usernameValid,
-    hasError: usernameHasError,
-    changeHandler: usernameChangeHandler,
-    blurHandler: usernameBlurHandler,
-    reset: resetUsernameInput,
-    classes: usernameClasses,
-  } = useInput((value) => value.trim() !== "");
+  const [nameInputStates, nameProps] = useInput(notEmpty);
+  const [passwordInputStates, passwordProps] = useInput(notEmpty);
 
-  const {
-    value: enteredPassword,
-    isValid: passwordValid,
-    hasError: passwordHasError,
-    changeHandler: passwordChangeHandler,
-    blurHandler: passwordBlurHandler,
-    reset: resetPasswordInput,
-    classes: passwordClasses,
-  } = useInput((value) => value.trim() !== "");
-
-  let validForm = false;
-
-  if (usernameValid && passwordValid) {
-    validForm = true;
-  }
+  const { formIsValid, formReset } = getForm(
+    nameInputStates,
+    passwordInputStates,
+  );
 
   async function loginHandler(event) {
     event.preventDefault();
     setIsFormSubmitting(true);
 
-    if (!validForm) {
+    if (!formIsValid) {
       setIsFormSubmitting(false);
       return;
     }
 
     try {
       const { user, token } = await authUserAPI("login", {
-        username: enteredUsername,
-        password: enteredPassword,
+        username: nameProps.value,
+        password: passwordProps.value,
       });
 
-      resetUsernameInput();
-      resetPasswordInput();
+      formReset();
 
       dispatch(userActions.login({ user, token }));
 
@@ -74,42 +61,23 @@ function LoginForm() {
       {formBackError.length > 0 && (
         <p className="error-text">{formBackError}</p>
       )}
-      <form onSubmit={loginHandler}>
-        <label className={usernameClasses}>
-          Usuario
-          <input
-            type="text"
-            placeholder="username123"
-            name="user"
-            onChange={usernameChangeHandler}
-            onBlur={usernameBlurHandler}
-            value={enteredUsername}
-          />
-          {usernameHasError && (
-            <p className="error-text">Please enter a valid username</p>
-          )}
-        </label>
-        <label className={passwordClasses}>
-          Contraseña
-          <input
-            type="password"
-            placeholder="************"
-            name="password"
-            onChange={passwordChangeHandler}
-            onBlur={passwordBlurHandler}
-            value={enteredPassword}
-          />
-          {passwordHasError && (
-            <p className="error-text">Please enter a password</p>
-          )}
-        </label>
-        <button className="auth-submit" type="submit" disabled={!validForm}>
-          {isFormSubmitting ? (
-            // <FontAwesomeIcon icon={faSpinner} className="btn-spinner" />
-            <LoaderSpinner />
-          ) : (
-            "Login"
-          )}
+      <form className="form" onSubmit={loginHandler}>
+        <Input
+          type="text"
+          labelText="Usuario"
+          placeholder="usuario123"
+          errMsg="Please enter a username"
+          {...nameProps}
+        />
+        <Input
+          type="password"
+          labelText="Contraseña"
+          placeholder="************"
+          errMsg="Please enter a password"
+          {...passwordProps}
+        />
+        <button className="auth-submit" type="submit" disabled={!formIsValid}>
+          {isFormSubmitting ? <LoaderSpinner /> : "Login"}
         </button>
         <Link to={"/register"}>
           <button className="auth-change">Register</button>

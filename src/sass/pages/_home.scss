@@ -20,6 +20,17 @@
     justify-content: space-between;
     align-items: flex-end;
     gap: $m3;
+
+    .new-book-btn {
+      position: absolute;
+      top: -5.8rem;
+      right: 4rem;
+    }
+    .edit-book-btn {
+      position: absolute;
+      top: -5.8rem;
+      right: 26rem;
+    }
   }
 
   &__filters-container {

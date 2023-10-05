@@ -27,7 +27,11 @@ function BooksTable({ books, setBooks }) {
       data,
       manualSortBy: true,
       // manualPagination: true,
-      initialState: { pageIndex: 0, pageSize: 20, sortBy: [""] },
+      initialState: {
+        pageIndex: 0,
+        pageSize: process.env.REACT_APP_TABLE_PAGE_SIZE,
+        sortBy: [""],
+      },
     },
     useSortBy
     // usePagination
