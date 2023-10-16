@@ -12,6 +12,7 @@ import {
   persistStore,
 } from "redux-persist";
 import userSlice from "./user-slice";
+import booksSlice from "./books-slice";
 
 const persistConfig = {
   key: "root",
@@ -21,13 +22,15 @@ const persistConfig = {
 
 const persistedViewReducer = persistReducer(persistConfig, viewSlice.reducer);
 const persistedUserReducer = persistReducer(persistConfig, userSlice.reducer);
+const persistedBooksReducer = persistReducer(persistConfig, booksSlice.reducer);
 
 const store = configureStore({
   reducer: {
     view: persistedViewReducer,
     user: persistedUserReducer,
+    books: persistedBooksReducer,
   },
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],

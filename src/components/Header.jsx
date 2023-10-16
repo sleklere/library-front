@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { viewActions } from "../store/view-slice";
 import { useDispatch, useSelector } from "react-redux";
+import { viewActions } from "../store/view-slice";
 import { userActions } from "../store/user-slice";
 
 function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const viewState = useSelector(state => state.view.view);
+  const viewState = useSelector((state) => state.view.view);
 
   const handleToggle = function (e) {
     dispatch(viewActions.toggleView(e.target.value));

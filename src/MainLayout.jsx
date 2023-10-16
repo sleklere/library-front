@@ -9,18 +9,16 @@ const overlays = document.getElementById("overlays");
 
 function MainLayout() {
   const newBookModalState = useSelector((state) => state.view.newBookModalOpen);
-  const editBookModalState = useSelector(
-    (state) => state.view.editBookModalOpen
-  );
+  const editBookModalState = useSelector((state) => state.view.editBookModalOpen);
+  const { editBookFormData } = useSelector((state) => state.view);
 
   return (
     <>
       <AuthVerify>
         {newBookModalState && ReactDOM.createPortal(<NewBookModal />, overlays)}
         {editBookModalState &&
-          ReactDOM.createPortal(<EditBookModal />, overlays)}
-        <Outlet
-        />
+          ReactDOM.createPortal(<EditBookModal formData={editBookFormData} />, overlays)}
+        <Outlet />
       </AuthVerify>
     </>
   );

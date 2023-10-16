@@ -1,16 +1,12 @@
-import { useDispatch } from "react-redux";
-import useInput from "../../hooks/useInput";
-import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import authUserAPI from "../utils/authUserAPI";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { userActions } from "../../store/user-slice";
+import useInput from "../../hooks/useInput";
+import authUserAPI from "../utils/authUserAPI";
+import { getForm, notEmpty } from "../utils/form";
 import LoaderSpinner from "../LoaderSpinner";
-import Input from "./Input";
-import { getForm } from "../utils/form";
-
-const notEmpty = val => {
-  return val.trim() !== "";
-};
+import Input from "../form/Input";
 
 function LoginForm() {
   const dispatch = useDispatch();
@@ -21,10 +17,7 @@ function LoginForm() {
   const [nameInputStates, nameProps] = useInput(notEmpty);
   const [passwordInputStates, passwordProps] = useInput(notEmpty);
 
-  const { formIsValid, formReset } = getForm(
-    nameInputStates,
-    passwordInputStates,
-  );
+  const { formIsValid, formReset } = getForm(nameInputStates, passwordInputStates);
 
   async function loginHandler(event) {
     event.preventDefault();
@@ -58,9 +51,7 @@ function LoginForm() {
   return (
     <div className="form-container">
       <h1>Iniciar Sesión</h1>
-      {formBackError.length > 0 && (
-        <p className="error-text">{formBackError}</p>
-      )}
+      {formBackError.length > 0 && <p className="error-text">{formBackError}</p>}
       <form className="form" onSubmit={loginHandler}>
         <Input
           type="text"

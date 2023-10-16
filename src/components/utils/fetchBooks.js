@@ -6,6 +6,7 @@ const fetchBooks = async function ({
   pageSize,
   sortBy,
   sortAuthor = false,
+  filter,
 }) {
   console.log("---- FETCHING BOOKS ----");
   const token = getAuthToken();
@@ -26,6 +27,9 @@ const fetchBooks = async function ({
   if (pageSize) {
     queryString += `limit=${pageSize}&`;
   }
+  if (filter) {
+    queryString += `${filter.field}=${filter.value}`;
+  }
 
   try {
     const res = await axios(
@@ -40,8 +44,9 @@ const fetchBooks = async function ({
 
     const books = res.data.data.books.map((book, i) => {
       book.author = book.author?.name;
-      book.isAvailable = book.isAvailable ? "No" : "Sí";
+      book.borrowed = book.isAvailable ? "No" : "Sí";
       book.id = i + 1;
+      book.categoriesString = book.categories.join(" - ");
       return book;
     });
 

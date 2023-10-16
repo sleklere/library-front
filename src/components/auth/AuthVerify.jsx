@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { userActions } from "../../store/user-slice";
 
 export default function AuthVerify({ children }) {
@@ -11,18 +11,6 @@ export default function AuthVerify({ children }) {
 
   useEffect(() => {
     async function logout() {
-      // only necessary if using cookies in response
-      // try {
-      //   const res = await axios({
-      //     method: "GET",
-      //     url: `${process.env.REACT_APP_API_URL}/users/logout`,
-      //   });
-
-      //   console.log(res);
-      // } catch (err) {
-      //   console.log(err);
-      // }
-
       dispatch(userActions.logout());
       navigate("/login");
     }

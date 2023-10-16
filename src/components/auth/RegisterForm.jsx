@@ -1,20 +1,12 @@
-import { useDispatch } from "react-redux";
-import LoaderSpinner from "../LoaderSpinner";
-import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../store/user-slice";
 import useInput from "../../hooks/useInput";
 import authUserAPI from "../utils/authUserAPI";
-import { userActions } from "../../store/user-slice";
-import Input from "./Input";
-import { getForm } from "../utils/form";
-
-const notEmpty = (val) => {
-  return val.trim() !== "";
-};
-
-const emailValidation = (val) => {
-  return /.{3,}@.{3,}\.com/.test(val);
-};
+import { emailValidation, getForm, notEmpty } from "../utils/form";
+import Input from "../form/Input";
+import LoaderSpinner from "../LoaderSpinner";
 
 function RegisterForm() {
   const dispatch = useDispatch();
@@ -27,9 +19,7 @@ function RegisterForm() {
   const [lastNameInputStates, lastNameProps] = useInput(notEmpty);
   const [emailInputStates, emailProps] = useInput(emailValidation);
   const [psswdInputStates, psswdProps] = useInput(notEmpty);
-  const [psswdConfInputStates, psswdConfProps] = useInput(
-    (val) => val.trim() === psswdProps.value
-  );
+  const [psswdConfInputStates, psswdConfProps] = useInput((val) => val.trim() === psswdProps.value);
 
   const { formIsValid, formReset } = getForm(
     usernameInputStates,

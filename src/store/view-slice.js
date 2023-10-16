@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const viewSlice = createSlice({
-  name: "user",
+  name: "view",
   initialState: {
     view: "Mosaic",
     newBookModalOpen: false,
     editBookModalOpen: false,
+    editBookFormData: null,
   },
   reducers: {
     toggleView(state, action) {
@@ -15,7 +16,8 @@ const viewSlice = createSlice({
       state.newBookModalOpen = action.payload;
     },
     toggleEditBookModalState(state, action) {
-      state.newBookModalOpen = action.payload;
+      state.editBookModalOpen = action.payload.open;
+      state.editBookFormData = action.payload.data;
     },
   },
 });

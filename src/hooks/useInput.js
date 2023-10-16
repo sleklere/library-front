@@ -1,38 +1,7 @@
-// import { useState } from "react";
-
-// export default function useInput(validateFn) {
-//   const [value, setValue] = useState("");
-//   const [isTouched, setIsTouched] = useState(false);
-
-//   const isValid = validateFn(value);
-//   const hasError = !isValid && isTouched;
-
-//   const changeHandler = (event) => setValue(event.target.value);
-
-//   const blurHandler = (event) => setIsTouched(true);
-
-//   const classes = hasError ? "form-input--invalid" : "";
-
-//   const reset = () => {
-//     setValue("");
-//     setIsTouched(false);
-//   };
-
-//   return {
-//     value,
-//     isValid,
-//     hasError,
-//     changeHandler,
-//     blurHandler,
-//     classes,
-//     reset,
-//   };
-// }
-
 import { useState } from "react";
 
-const useInput = (validationScheme) => {
-  const [value, setValue] = useState("");
+const useInput = (validationScheme, initialValue) => {
+  const [value, setValue] = useState(initialValue || "");
   const [touched, setTouched] = useState(false);
 
   const isValid = validationScheme(value);

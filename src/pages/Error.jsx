@@ -1,5 +1,6 @@
 import { useRouteError } from "react-router-dom";
 import useSetPageTitle from "../hooks/useSetPageTitle";
+import { Link } from "react-router-dom/dist";
 
 function Error(props) {
   useSetPageTitle(props.pageTitle);
@@ -25,11 +26,16 @@ function Error(props) {
   }
 
   return (
-    <>
-      <h1>{error.status}</h1>
-      <h2>{title}</h2>
-      <p>{message}</p>
-    </>
+    <main className="error">
+      <div className="error-container">
+        <h1 className="error__status">{error.status}</h1>
+        {/* <h2 className="error__title">{title}</h2> */}
+        <p className="error__message">{message}</p>
+        <Link to={"/home"}>
+          <button>Back to Home</button>
+        </Link>
+      </div>
+    </main>
   );
 }
 
