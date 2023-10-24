@@ -6,6 +6,9 @@ import useInput from "../hooks/useInput";
 import { getForm, notEmpty } from "./utils/form";
 import Input from "./form/Input";
 import LoaderSpinner from "./LoaderSpinner";
+import axios from "axios";
+import fetchBooks from "./utils/fetchBooks";
+import { booksActions } from "../store/books-slice";
 
 function EditBookModal() {
   const dispatch = useDispatch();
@@ -20,8 +23,11 @@ function EditBookModal() {
     (val) => val || !val,
     formData.categories.join(", ")
   );
-  const [, borrowerProps] = useInput((val) => val || !val, formData.borrower);
   const [borrowedState, setBorrowedState] = useState(formData.isAvailable ? false : true);
+  const [borrowerInputStates, borrowerProps] = useInput(
+    (val) => val.trim() !== "" || !borrowedState,
+    formData.borrower
+  );
 
   const [formBackError, setFormBackError] = useState("");
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
@@ -38,10 +44,51 @@ function EditBookModal() {
     });
   };
 
-  const { formIsValid, formReset } = getForm(titleInputStates, authorInputStates, ctgryInputStates);
+  const { formIsValid } = getForm(
+    titleInputStates,
+    authorInputStates,
+    ctgryInputStates,
+    borrowerInputStates
+  );
 
-  async function handleNewBook(event) {
+  async function handleEditBook(event) {
     event.preventDefault();
+    setIsFormSubmitting(true);
+    if (!formIsValid) {
+      setIsFormSubmitting(false);
+      return;
+    }
+
+    try {
+      console.log(formData);
+      const data = {
+        author: authorProps.value,
+        title: titleProps.value,
+        categories: formatCathegories(ctgryProps.value),
+        userId: user._id,
+        isAvailable: !borrowedState,
+      };
+      if (borrowerProps.value.trim() !== "") {
+        data.borrower = borrowerProps.value;
+      }
+      console.log(data);
+      await axios(`${process.env.REACT_APP_API_URL}/books/${formData._id}/edit`, {
+        method: "patch",
+        data,
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      setIsFormSubmitting(false);
+
+      fetchBooks({}).then((booksData) => {
+        dispatch(booksActions.storeBooks(booksData));
+      });
+    } catch (err) {
+      console.log(err);
+      setIsFormSubmitting(false);
+      setFormBackError(err.response?.data.message);
+    }
+
     return;
   }
 
@@ -52,8 +99,8 @@ function EditBookModal() {
         <div className="new-book-modal_background-side"></div>
         <div className="new-book-modal_form-side">
           <h1>Editar Libro</h1>
-          {formBackError.length > 0 && <p className="error-text">{formBackError}</p>}
-          <form onSubmit={handleNewBook} className="form">
+          {formBackError?.length > 0 && <p className="error-text">{formBackError}</p>}
+          <form onSubmit={handleEditBook} className="form">
             <Input
               type="text"
               labelText="Título"
@@ -108,11 +155,12 @@ function EditBookModal() {
                 type="text"
                 labelText="A quién?"
                 placeholder="Juan Gonzalez"
+                errMsg="Borrower must have a name."
                 {...borrowerProps}
               />
             )}
             <button type="submit" disabled={!formIsValid}>
-              {isFormSubmitting ? <LoaderSpinner /> : "Crear libro"}
+              {isFormSubmitting ? <LoaderSpinner /> : "Guardar cambios"}
             </button>
           </form>
         </div>

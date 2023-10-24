@@ -15,23 +15,30 @@ function Home(props) {
   const dispatch = useDispatch();
   const viewState = useSelector((state) => state.view.view);
   const books = useSelector((state) => state.books.books);
+  const booksCopy = useSelector((state) => state.books.booksCopy);
   const [booksLoading, setBooksLoading] = useState(true);
-  const [, filterProps] = useInput((val) => val.trim() !== "", "Filosofía");
+  const [filterInputStates, filterProps] = useInput((val) => val.trim() !== "", "Filosofía");
 
   useEffect(() => {
     fetchBooks({}).then((booksData) => {
       setBooksLoading(false);
       dispatch(booksActions.storeBooks(booksData));
+      dispatch(booksActions.saveBooksCopy(booksData));
     });
   }, [dispatch]);
 
-  const fetchFilteredBooks = async () => {
+  const filterBooks = async () => {
     setBooksLoading(true);
-    const booksData = await fetchBooks({
-      filter: { field: "categories", value: filterProps.value },
-    });
+    if (filterInputStates.isValid) {
+      const booksFiltered = books
+        .slice()
+        .filter((book) => book.categories.includes(filterProps.value));
+      dispatch(booksActions.saveBooksCopy(books));
+      dispatch(booksActions.storeBooks(booksFiltered));
+    } else {
+      dispatch(booksActions.storeBooks(booksCopy));
+    }
     setBooksLoading(false);
-    dispatch(booksActions.storeBooks(booksData));
   };
 
   return (
@@ -59,9 +66,10 @@ function Home(props) {
                 <option value="Filosofía">Filosofía</option>
                 <option value="Ficción">Ficción</option>
                 <option value="Distopía">Distopía</option>
+                <option value="">Todas</option>
               </select>
             </label>
-            <button onClick={fetchFilteredBooks}>Filter</button>
+            <button onClick={filterBooks}>Filter</button>
           </div>
           {viewState === "Mosaic" && (
             <div className="home__mosaic-container">

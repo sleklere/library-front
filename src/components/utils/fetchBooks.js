@@ -1,13 +1,7 @@
 import axios from "axios";
 import { getAuthToken } from "../auth/AuthVerify";
 
-const fetchBooks = async function ({
-  pageIndex,
-  pageSize,
-  sortBy,
-  sortAuthor = false,
-  filter,
-}) {
+const fetchBooks = async function ({ pageIndex, pageSize, sortBy, sortAuthor = false, filter }) {
   console.log("---- FETCHING BOOKS ----");
   const token = getAuthToken();
 
@@ -33,9 +27,7 @@ const fetchBooks = async function ({
 
   try {
     const res = await axios(
-      `${process.env.REACT_APP_API_URL}${"/books"}${
-        sortAuthor ? "/sortAuthor" : ""
-      }` + queryString,
+      `${process.env.REACT_APP_API_URL}${"/books"}${sortAuthor ? "/sortAuthor" : ""}` + queryString,
       {
         method: "get",
         headers: { Authorization: `Bearer ${token}` },
@@ -43,6 +35,7 @@ const fetchBooks = async function ({
     );
 
     const books = res.data.data.books.map((book, i) => {
+      book.authorId = book.author?.id;
       book.author = book.author?.name;
       book.borrowed = book.isAvailable ? "No" : "Sí";
       book.id = i + 1;

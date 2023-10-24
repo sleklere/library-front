@@ -7,6 +7,8 @@ import { getAuthToken } from "./auth/AuthVerify";
 import LoaderSpinner from "./LoaderSpinner";
 import Input from "./form/Input";
 import axios from "axios";
+import fetchBooks from "./utils/fetchBooks";
+import { booksActions } from "../store/books-slice";
 
 function NewBookModal() {
   const dispatch = useDispatch();
@@ -48,13 +50,12 @@ function NewBookModal() {
     }
 
     try {
-      console.log(formatCathegories(ctgryProps.value));
       await axios(`${process.env.REACT_APP_API_URL}${"/books"}`, {
         method: "post",
         data: {
           author: authorProps.value,
           title: titleProps.value,
-          cathegories: ctgryProps.value,
+          categories: formatCathegories(ctgryProps.value),
           userId: user._id,
           isAvailable: !borrowedState,
           borrower: borrowerProps.value,
@@ -64,6 +65,10 @@ function NewBookModal() {
 
       formReset();
       setIsFormSubmitting(false);
+
+      fetchBooks({}).then((booksData) => {
+        dispatch(booksActions.storeBooks(booksData));
+      });
     } catch (err) {
       console.log(err.response);
       setIsFormSubmitting(false);
