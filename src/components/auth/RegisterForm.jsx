@@ -41,7 +41,7 @@ function RegisterForm() {
     }
 
     try {
-      const { user, token } = authUserAPI("signup", {
+      const { user, token } = await authUserAPI("signup", {
         firstName: firstNameProps.value,
         lastName: lastNameProps.value,
         username: usernameProps.value,
@@ -52,6 +52,8 @@ function RegisterForm() {
 
       formReset();
 
+      console.log(token);
+
       dispatch(userActions.login({ user, token }));
 
       setIsFormSubmitting(false);
@@ -60,14 +62,14 @@ function RegisterForm() {
     } catch (err) {
       console.log(err.response);
       setIsFormSubmitting(false);
-      setFormBackError(err.response.data.message);
+      setFormBackError(err.response?.data.message);
     }
   }
 
   return (
     <div className="form-container">
       <h1>Creá tu Cuenta</h1>
-      {formBackError.length > 0 && <p>{formBackError}</p>}
+      {formBackError?.length > 0 && <p className="error-text">{formBackError}</p>}
       <form className="form" onSubmit={registerHandler}>
         <Input
           type="text"

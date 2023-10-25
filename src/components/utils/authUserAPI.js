@@ -6,6 +6,7 @@ async function authUserAPI(endPoint, data) {
     url: `${process.env.REACT_APP_API_URL}/users/${endPoint}`,
     data,
   });
+  console.log(res);
 
   const user = res.data.data.user;
 
