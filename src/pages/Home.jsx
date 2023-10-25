@@ -69,7 +69,7 @@ function Home(props) {
                 <option value="">Todas</option>
               </select>
             </label>
-            <button onClick={filterBooks}>Filter</button>
+            <button onClick={filterBooks}>Filtrar</button>
           </div>
           {viewState === "Mosaic" && (
             <div className="home__mosaic-container">

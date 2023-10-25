@@ -70,7 +70,7 @@ function NewBookModal() {
         dispatch(booksActions.storeBooks(booksData));
       });
     } catch (err) {
-      console.log(err.response);
+      console.log(err);
       setIsFormSubmitting(false);
       setFormBackError(err.response.data.message);
     }
@@ -117,7 +117,7 @@ function NewBookModal() {
                   checked={borrowedState}
                 />
                 <label className="radio-button" htmlFor="borrowed">
-                  Yes
+                  Sí
                 </label>
 
                 <input

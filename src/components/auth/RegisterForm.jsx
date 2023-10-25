@@ -52,7 +52,7 @@ function RegisterForm() {
 
       formReset();
 
-      console.log(token);
+      console.log(user);
 
       dispatch(userActions.login({ user, token }));
 

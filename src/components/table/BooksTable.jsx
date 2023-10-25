@@ -9,7 +9,7 @@ const COLUMNS = [
   { accessor: "id", Header: "Nº" },
   { accessor: "title", Header: "Título" },
   { accessor: "author", Header: "Autor" },
-  { accessor: "categoriesString", Header: "Categories" },
+  { accessor: "categoriesString", Header: "Categorías" },
   { accessor: "borrowed", Header: "Prestado" },
   { accessor: "borrower", Header: "Prestador" },
 ];

@@ -30,7 +30,7 @@ function Header() {
             onChange={handleToggle}
             checked={viewState === "Table"}
           />
-          <label htmlFor="view-toggle-table"> Table</label>
+          <label htmlFor="view-toggle-table"> Tabla</label>
 
           <input
             type="radio"
@@ -40,11 +40,11 @@ function Header() {
             onChange={handleToggle}
             checked={viewState === "Mosaic"}
           />
-          <label htmlFor="view-toggle-mosaic"> Mosaic</label>
+          <label htmlFor="view-toggle-mosaic"> Mosaico</label>
         </div>
       </div>
       <button className="btn header__logout-btn" onClick={logoutHandler}>
-        Logout
+        Cerrar sesión
       </button>
     </header>
   );

@@ -133,7 +133,7 @@ function EditBookModal() {
                   checked={borrowedState}
                 />
                 <label className="radio-button" htmlFor="borrowed">
-                  Yes
+                  Sí
                 </label>
 
                 <input
