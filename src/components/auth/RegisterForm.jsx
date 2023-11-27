@@ -115,10 +115,10 @@ function RegisterForm() {
           {...psswdConfProps}
         />
         <button className={`btn auth-submit`} type="submit">
-          {isFormSubmitting ? <LoaderSpinner /> : "Register"}
+          {isFormSubmitting ? <LoaderSpinner /> : "Registrarse"}
         </button>
         <Link to={"/login"}>
-          <button className="auth-change">Login</button>
+          <button className="auth-change">Iniciar sesión</button>
         </Link>
       </form>
     </div>

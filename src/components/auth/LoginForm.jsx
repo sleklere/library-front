@@ -68,10 +68,10 @@ function LoginForm() {
           {...passwordProps}
         />
         <button className="auth-submit" type="submit" disabled={!formIsValid}>
-          {isFormSubmitting ? <LoaderSpinner /> : "Login"}
+          {isFormSubmitting ? <LoaderSpinner /> : "Iniciar sesión"}
         </button>
         <Link to={"/register"}>
-          <button className="auth-change">Register</button>
+          <button className="auth-change">Registrarse</button>
         </Link>
       </form>
     </div>
