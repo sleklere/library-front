@@ -29,7 +29,7 @@ function Error(props) {
     <main className="error">
       <div className="error-container">
         <h1 className="error__status">{error.status}</h1>
-        {/* <h2 className="error__title">{title}</h2> */}
+        <h2 className="error__title">{title}</h2>
         <p className="error__message">{message}</p>
         <Link to={"/home"}>
           <button>Back to Home</button>
