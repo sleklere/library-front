@@ -5,6 +5,8 @@ const fetchBooks = async function ({ pageIndex, pageSize, sortBy, sortAuthor = f
   console.log("---- FETCHING BOOKS ----");
   const token = getAuthToken();
 
+  console.log(token);
+
   let sort = "";
 
   if (sortBy && sortBy[0]?.id) {
@@ -34,7 +36,7 @@ const fetchBooks = async function ({ pageIndex, pageSize, sortBy, sortAuthor = f
       }
     );
 
-    const books = res.data.data.books.map((book, i) => {
+    const books = res?.data.data.books.map((book, i) => {
       book.authorId = book.author?.id;
       book.author = book.author?.name;
       book.borrowed = book.isAvailable ? "No" : "Sí";
