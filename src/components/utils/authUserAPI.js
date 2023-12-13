@@ -1,6 +1,8 @@
 import axios from "axios";
 
 async function authUserAPI(endPoint, data) {
+  console.log(`API URL: ${process.env.REACT_APP_API_URL}`);
+
   const res = await axios({
     method: "POST",
     url: `${process.env.REACT_APP_API_URL}/users/${endPoint}`,
