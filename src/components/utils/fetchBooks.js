@@ -28,6 +28,11 @@ const fetchBooks = async function ({ pageIndex, pageSize, sortBy, sortAuthor = f
   }
 
   try {
+    console.log(
+      "Making request at",
+      `${process.env.REACT_APP_API_URL}${"/books"}${sortAuthor ? "/sortAuthor" : ""}`
+    );
+
     const res = await axios(
       `${process.env.REACT_APP_API_URL}${"/books"}${sortAuthor ? "/sortAuthor" : ""}` + queryString,
       {
@@ -35,6 +40,8 @@ const fetchBooks = async function ({ pageIndex, pageSize, sortBy, sortAuthor = f
         headers: { Authorization: `Bearer ${token}` },
       }
     );
+
+    console.log(res);
 
     const books = res?.data.data.books.map((book, i) => {
       book.authorId = book.author?.id;
