@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import viewSlice from "./view-slice";
 import storage from "redux-persist/lib/storage";
 import {
@@ -14,23 +14,15 @@ import {
 import userSlice from "./user-slice";
 import booksSlice from "./books-slice";
 
-const persistConfig = {
-  key: "root",
-  version: 1,
-  storage,
-};
-
-const persistedViewReducer = persistReducer(persistConfig, viewSlice.reducer);
-const persistedUserReducer = persistReducer(persistConfig, userSlice.reducer);
-const persistedBooksReducer = persistReducer(persistConfig, booksSlice.reducer);
+const reducers = combineReducers({
+  view: viewSlice.reducer,
+  user: userSlice.reducer,
+  books: booksSlice.reducer,
+});
 
 const store = configureStore({
-  reducer: {
-    view: persistedViewReducer,
-    user: persistedUserReducer,
-    books: persistedBooksReducer,
-  },
-  middleware: getDefaultMiddleware =>
+  reducer: persistReducer({ key: "root", storage }, reducers),
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
