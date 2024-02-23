@@ -19,14 +19,14 @@ function BookActions({ tableFilter, tableSetFilter, selectedRows }) {
   const [confirmationState, setConfirmationState] = useState(false);
   const token = getAuthToken();
 
-  const openEditBookModal = () => {
-    dispatch(
-      viewActions.toggleEditBookModalState({
-        open: true,
-        data: selectedRows[0].original,
-      })
-    );
-  };
+  // const openEditBookModal = () => {
+  //   dispatch(
+  //     viewActions.toggleEditBookModalState({
+  //       open: true,
+  //       data: selectedRows[0].original,
+  //     })
+  //   );
+  // };
 
   const handleBookDeletion = async () => {
     // confirm deletion
@@ -75,13 +75,13 @@ function BookActions({ tableFilter, tableSetFilter, selectedRows }) {
         >
           <DeleteOutline fontSize="large" />
         </button>
-        <button
+        {/* <button
           disabled={selectedRows.length !== 1}
           className="edit-book-btn"
           onClick={openEditBookModal}
         >
           <EditNote fontSize="large" />
-        </button>
+        </button> */}
         <button className="new-book-btn" onClick={openNewBookModal}>
           <Add fontSize="large" />
         </button>

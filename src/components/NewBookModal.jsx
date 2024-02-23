@@ -65,6 +65,7 @@ function NewBookModal() {
 
       formReset();
       setIsFormSubmitting(false);
+      closeModal();
 
       fetchBooks({}).then((booksData) => {
         dispatch(booksActions.storeBooks(booksData));
