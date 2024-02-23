@@ -101,7 +101,7 @@ td {
 td,
 th {
   text-align: left;
-  padding: $p1 $p2;
+  padding: $p2 $p2;
 }
 
 thead tr {
@@ -115,4 +115,47 @@ tr {
 
 tr:nth-child(even) {
   background-color: $color-tr-1;
+}
+
+tr {
+  position: relative;
+
+  div.edit {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-1.6rem);
+
+    button {
+      display: flex;
+      align-items: center;
+      height: 3.2rem;
+      min-height: unset;
+      text-align: center;
+      font-size: $fs-1;
+      padding: 0.4rem $p1;
+      background-color: $color-accent;
+      transition: all 0.2s;
+
+      &:disabled {
+        background-color: lighten($color-accent, 10);
+      }
+
+      &:hover {
+        background-color: darken($color-accent, 8);
+      }
+
+      svg {
+        height: 1.2em;
+        width: 1.2em;
+      }
+    }
+  }
+}
+
+tr:hover div.edit {
+  display: flex;
 }

@@ -79,6 +79,7 @@ function EditBookModal() {
       });
 
       setIsFormSubmitting(false);
+      closeModal();
 
       fetchBooks({}).then((booksData) => {
         dispatch(booksActions.storeBooks(booksData));

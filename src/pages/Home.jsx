@@ -17,7 +17,7 @@ function Home(props) {
   const books = useSelector((state) => state.books.books);
   const booksCopy = useSelector((state) => state.books.booksCopy);
   const [booksLoading, setBooksLoading] = useState(true);
-  const [filterInputStates, filterProps] = useInput((val) => val.trim() !== "", "Filosofía");
+  const [filterInputStates, filterProps] = useInput((val) => val.trim() !== "", "");
 
   useEffect(() => {
     fetchBooks({}).then((booksData) => {
@@ -30,7 +30,7 @@ function Home(props) {
   const filterBooks = async () => {
     setBooksLoading(true);
     if (filterInputStates.isValid) {
-      const booksFiltered = books
+      const booksFiltered = booksCopy
         .slice()
         .filter((book) => book.categories.includes(filterProps.value));
       dispatch(booksActions.saveBooksCopy(books));
@@ -63,10 +63,10 @@ function Home(props) {
                 className={`input ${filterProps.classes}`}
                 data-testid="reference-select"
               >
+                <option value="">Todas</option>
                 <option value="Filosofía">Filosofía</option>
                 <option value="Ficción">Ficción</option>
                 <option value="Distopía">Distopía</option>
-                <option value="">Todas</option>
               </select>
             </label>
             <button onClick={filterBooks}>Filtrar</button>

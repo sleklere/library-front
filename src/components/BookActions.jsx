@@ -2,7 +2,7 @@ import ReactDOM from "react-dom";
 import { useDispatch } from "react-redux";
 import { viewActions } from "../store/view-slice";
 import GlobalFilter from "./table/GlobalFilter";
-import { Add, DeleteOutline, EditNote } from "@mui/icons-material";
+import { Add, DeleteOutline } from "@mui/icons-material";
 import axios from "axios";
 import { getAuthToken } from "./auth/AuthVerify";
 import fetchBooks from "./utils/fetchBooks";
@@ -19,14 +19,14 @@ function BookActions({ tableFilter, tableSetFilter, selectedRows }) {
   const [confirmationState, setConfirmationState] = useState(false);
   const token = getAuthToken();
 
-  const openEditBookModal = () => {
-    dispatch(
-      viewActions.toggleEditBookModalState({
-        open: true,
-        data: selectedRows[0].original,
-      })
-    );
-  };
+  // const openEditBookModal = () => {
+  //   dispatch(
+  //     viewActions.toggleEditBookModalState({
+  //       open: true,
+  //       data: selectedRows[0].original,
+  //     })
+  //   );
+  // };
 
   const handleBookDeletion = async () => {
     // confirm deletion
@@ -75,13 +75,13 @@ function BookActions({ tableFilter, tableSetFilter, selectedRows }) {
         >
           <DeleteOutline fontSize="large" />
         </button>
-        <button
+        {/* <button
           disabled={selectedRows.length !== 1}
           className="edit-book-btn"
           onClick={openEditBookModal}
         >
           <EditNote fontSize="large" />
-        </button>
+        </button> */}
         <button className="new-book-btn" onClick={openNewBookModal}>
           <Add fontSize="large" />
         </button>
