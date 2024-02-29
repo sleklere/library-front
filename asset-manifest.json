@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/static/css/main.d7a1d787.css",
-    "main.js": "/static/js/main.e4c78ad0.js",
+    "main.js": "/static/js/main.b85cfd9d.js",
     "static/js/787.0592dfef.chunk.js": "/static/js/787.0592dfef.chunk.js",
     "static/media/new-book-background.jpg": "/static/media/new-book-background.345189d4bada9556f88f.jpg",
     "static/media/stacked-waves-haikei.svg": "/static/media/stacked-waves-haikei.9589c0aa4ecaa6ec750d.svg",
     "index.html": "/index.html",
     "main.d7a1d787.css.map": "/static/css/main.d7a1d787.css.map",
-    "main.e4c78ad0.js.map": "/static/js/main.e4c78ad0.js.map",
+    "main.b85cfd9d.js.map": "/static/js/main.b85cfd9d.js.map",
     "787.0592dfef.chunk.js.map": "/static/js/787.0592dfef.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d7a1d787.css",
-    "static/js/main.e4c78ad0.js"
+    "static/js/main.b85cfd9d.js"
   ]
 }
