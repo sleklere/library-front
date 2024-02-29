@@ -8,6 +8,8 @@ import LoaderSpinner from "../components/LoaderSpinner";
 import fetchBooks from "../components/utils/fetchBooks";
 import { booksActions } from "../store/books-slice";
 import useInput from "../hooks/useInput";
+import axios from "axios";
+import { getAuthToken } from "../components/auth/AuthVerify";
 
 function Home(props) {
   useSetPageTitle(props.pageTitle);
@@ -18,6 +20,8 @@ function Home(props) {
   const booksCopy = useSelector((state) => state.books.booksCopy);
   const [booksLoading, setBooksLoading] = useState(true);
   const [filterInputStates, filterProps] = useInput((val) => val.trim() !== "", "");
+  const [categories, setCategories] = useState([]);
+  const token = getAuthToken();
 
   useEffect(() => {
     fetchBooks({}).then((booksData) => {
@@ -25,7 +29,14 @@ function Home(props) {
       dispatch(booksActions.storeBooks(booksData));
       dispatch(booksActions.saveBooksCopy(booksData));
     });
-  }, [dispatch]);
+    axios(`${process.env.REACT_APP_API_URL}/books/categories`, {
+      method: "get",
+      headers: { Authorization: `Bearer ${token}` },
+    }).then((res) => {
+      console.log(res);
+      setCategories(res.data.data.categories);
+    });
+  }, [dispatch, token]);
 
   const filterBooks = async () => {
     setBooksLoading(true);
@@ -64,9 +75,11 @@ function Home(props) {
                 data-testid="reference-select"
               >
                 <option value="">Todas</option>
-                <option value="Filosofía">Filosofía</option>
-                <option value="Ficción">Ficción</option>
-                <option value="Distopía">Distopía</option>
+                {categories.map((categ, i) => (
+                  <option key={i} value={categ.name}>
+                    {categ.name}
+                  </option>
+                ))}
               </select>
             </label>
             <button onClick={filterBooks}>Filtrar</button>
