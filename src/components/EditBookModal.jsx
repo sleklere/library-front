@@ -9,6 +9,7 @@ import LoaderSpinner from "./LoaderSpinner";
 import axios from "axios";
 import fetchBooks from "./utils/fetchBooks";
 import { booksActions } from "../store/books-slice";
+import { Close } from "@mui/icons-material";
 
 function EditBookModal() {
   const dispatch = useDispatch();
@@ -97,6 +98,9 @@ function EditBookModal() {
     <>
       <div className="overlay-bg" onClick={closeModal}></div>
       <div className="new-book-modal">
+        <div className="modal-close" onClick={closeModal}>
+          <Close fontSize="large" />
+        </div>
         <div className="new-book-modal_background-side"></div>
         <div className="new-book-modal_form-side">
           <h1>Editar Libro</h1>

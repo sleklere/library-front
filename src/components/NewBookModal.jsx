@@ -9,6 +9,7 @@ import Input from "./form/Input";
 import axios from "axios";
 import fetchBooks from "./utils/fetchBooks";
 import { booksActions } from "../store/books-slice";
+import { Close } from "@mui/icons-material";
 
 function NewBookModal() {
   const dispatch = useDispatch();
@@ -80,7 +81,10 @@ function NewBookModal() {
   return (
     <>
       <div className="overlay-bg" onClick={closeModal}></div>
-      <div className="new-book-modal">
+      <div className="new-book-modal" onClick={closeModal}>
+        <div className="modal-close">
+          <Close fontSize="large" />
+        </div>
         <div className="new-book-modal_background-side"></div>
         <div className="new-book-modal_form-side">
           <h1>Nuevo Libro</h1>
